@@ -3,7 +3,7 @@ const paginationHelpers = require("../../../helper/paganiton");
 const searchHelpers = require("../../../helper/search")
 
 
-//get /api/v1/task
+//get /api/v1/tasks
 module.exports.index = async (req, res) => {
 
     const find = {
@@ -48,7 +48,7 @@ module.exports.index = async (req, res) => {
 
     res.json(tasks);
 }
-//get /api/v1/task/detail/:id
+//get /api/v1/tasks/detail/:id
 module.exports.detail = async (req, res) => {
     try {
         const id = req.params.id;
@@ -63,7 +63,7 @@ module.exports.detail = async (req, res) => {
     }
 }
 
-// patch /api/v1/task/changeStatus/:id
+// patch /api/v1/tasks/changeStatus/:id
 module.exports.changeStatus = async (req, res) => {
     try {
         const id = req.params.id;
@@ -81,10 +81,53 @@ module.exports.changeStatus = async (req, res) => {
         })
     } catch (error) {
         res.json({
-       
+
             code: 400,
             messeage: "không tồn tại"
         })
     }
+
+}
+
+//patch /api/v1/tasks/change-multi
+module.exports.changeMulti = async (req, res) => {
+    try {
+        const {
+            ids,
+            key,
+            value
+        } = req.body; //cú pháp phá vỡ cấu trúc
+        console.log(ids);
+        console.log(key);
+        console.log(value);
+        switch (key) {
+            case "status":
+                await Task.updateMany({
+                    _id: {
+                        $in: ids
+                    }
+                }, {
+                    status: value
+                })
+                res.json({
+                    code: 200,
+                    messeage: "cập nhật thành công"
+                })
+                break;
+
+            default:
+                res.json({
+                    code: 400,
+                    messeage: "không tồn tại"
+                })
+                break;
+        }
+    } catch (error) {
+        res.json({
+            code: 400,
+            messeage: "không tồn tại"
+        })
+    }
+
 
 }

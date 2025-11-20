@@ -8,6 +8,7 @@ router.get("/", controller.index);
 //get api/v1/tasks/detail/:id
 router.get("/detail/:id", controller.detail)
 router.patch("/change-status/:id", controller.changeStatus)
+router.patch("/change-multi", controller.changeMulti)
 
 
 
