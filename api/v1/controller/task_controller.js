@@ -114,6 +114,20 @@ module.exports.changeMulti = async (req, res) => {
                     messeage: "cập nhật thành công"
                 })
                 break;
+            case "delete":
+                await Task.updateMany({
+                     _id: {
+                        $in: ids
+                    }
+                },{
+                    deleted:true,
+                    deletedAt:new Date()
+                })
+                 res.json({
+                    code: 200,
+                    messeage: "xoá thành công"
+                })
+                break;
 
             default:
                 res.json({
