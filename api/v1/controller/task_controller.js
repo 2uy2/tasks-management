@@ -1,11 +1,11 @@
-const Task = require("../../../model/task_model");
+const Task = require("../model/task_model");
 const paginationHelpers = require("../../../helper/paganiton");
 const searchHelpers = require("../../../helper/search")
 
 
 //get /api/v1/task
 module.exports.index = async (req, res) => {
-    
+
     const find = {
         deleted: false
     }
@@ -61,4 +61,30 @@ module.exports.detail = async (req, res) => {
     } catch (error) {
         res.json("không tìm thấy")
     }
+}
+
+// patch /api/v1/task/changeStatus/:id
+module.exports.changeStatus = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const status = req.body.status;
+
+        await Task.updateOne({
+            _id: id,
+        }, {
+            status: status
+        })
+        res.json({
+            id: id,
+            code: 200,
+            messeage: "cập nhật thành công"
+        })
+    } catch (error) {
+        res.json({
+       
+            code: 400,
+            messeage: "không tồn tại"
+        })
+    }
+
 }
