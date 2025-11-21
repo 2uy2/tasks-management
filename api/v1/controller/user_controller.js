@@ -24,11 +24,41 @@ module.exports.register = async (req, res) => {
 
         user.save();
         const token = user.token;
-        res.cookie("token",token);//tạo cookie cho fe, vì cookie lưu được cả trên server và fe  
+        res.cookie("token", token); //tạo cookie cho fe, vì cookie lưu được cả trên server và fe  
         res.json({
             code: 200,
             message: "tạo tài khoản thành công",
             token: token
         })
     }
+}
+module.exports.login = async (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    const user = await User.findOne({
+        email: email,
+        deleted:false
+    })
+    if (!user) {
+        res.json({
+            code: 400,
+            message: "email không tồn tại"
+        })
+        return;
+    }
+    if (md5(password) != user.password) {
+        res.json({
+            code: 400,
+            message: "sai mật khẩu"
+        });
+        return;
+    }
+    const token = user.token;
+    res.cookie("token",token)
+    res.json({
+        code: 400,
+        message: "đăng nhập thành công",
+        token:token
+    })
+
 }
