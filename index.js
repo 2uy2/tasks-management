@@ -2,6 +2,7 @@ const express = require("express");
 const database = require("./config/database");
 const bodyParser = require('body-parser'); // dùng để giúp đọc và hiểu dữ liệu mà client gửi lên server. ở dạng json (req.body)
 var cors = require('cors');
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 
@@ -12,6 +13,8 @@ const port = process.env.PORT;
 app.use(cors())
 
 database.connect();
+
+app.use(cookieParser())
 
 //parse application/json (áp dụng cho dạng dữ liệu json)
 app.use(bodyParser.json())
