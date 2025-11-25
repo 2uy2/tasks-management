@@ -116,14 +116,14 @@ module.exports.changeMulti = async (req, res) => {
                 break;
             case "delete":
                 await Task.updateMany({
-                     _id: {
+                    _id: {
                         $in: ids
                     }
-                },{
-                    deleted:true,
-                    deletedAt:new Date()
+                }, {
+                    deleted: true,
+                    deletedAt: new Date()
                 })
-                 res.json({
+                res.json({
                     code: 200,
                     messeage: "xoá thành công"
                 })
@@ -148,6 +148,7 @@ module.exports.changeMulti = async (req, res) => {
 //posst /api/v1/tasks/create
 module.exports.create = async (req, res) => {
     try {
+        req.body.createdBy = req.user.id;
         const task = new Task(req.body);
         const data = await task.save();
         res.json({
@@ -187,8 +188,8 @@ module.exports.delete = async (req, res) => {
         const id = req.params.id;
         await Task.updateOne({
             _id: id
-        },{
-            deleted:true,
+        }, {
+            deleted: true,
             deletedAt: new Date()
         })
         res.json({
