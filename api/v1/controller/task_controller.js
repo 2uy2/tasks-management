@@ -7,6 +7,10 @@ const searchHelpers = require("../../../helper/search")
 module.exports.index = async (req, res) => {
 
     const find = {
+        $or:[
+            {createdBy:req.user.id},
+            {listUser:req.user.id},
+        ],
         deleted: false
     }
     //status
