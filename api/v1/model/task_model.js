@@ -7,6 +7,7 @@ const taskSchema = new mongoose.Schema({
     timeStart:Date,
     timeFinish:Date,
     createdBy:String,
+    listUser:Array,
     deleted :{
         type:Boolean,
         default:false // giá trị mặc định nếu người ta k xét thì sẽ là false 
