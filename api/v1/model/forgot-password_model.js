@@ -10,7 +10,7 @@ const forgotPasswordSchema = new mongoose.Schema(
         },
         expireAt:{ //xét hạn sử dụng , hàm trong monggo tự động xoá
             type:Date,
-            expires:0
+            expires:0//code monggo tính theo đơn vị giây
         }
     },
     
